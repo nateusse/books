@@ -8,7 +8,7 @@
 - Chapter 06 - Class Design
 - Chapter 07 - Beyond Classes
 - Chapter 08 - Lambdas and Functional Interfaces
-- Chapter 09 - Collections and Generics
+- [Chapter 09 - Collections and Generics](chapter09/README.md)
 - Chapter 10 - Streams
 - Chapter 11 - Exceptions and Localization
 - Chapter 12 - Modules

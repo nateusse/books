@@ -6,8 +6,7 @@
 Group of objects contained in a single object.
 Usually 2 constructors, default, 
 **Java Collections Framework**: 
-Set of classes in java.util for storing collections ![Java Collections Framework](
-    /images/ch9/collection.png)
+Set of classes in java.util for storing collections [Java Collections Framework](/images/chapter09/collection.png)
 
 
 ## Interfaces
@@ -63,13 +62,13 @@ Yes duplicates, yes order, int index to retrieve and add. No static like arrays
 
 - **LIST METHODS** :
 
- | MethodDescription                     | Description                                              |
-    |---------------------------------------|----------------------------------------------------------|
-    | public boolean add(E element)         | Adds element to end (available on all Collection APIs)   |
-     | public void add(int index, E element) | Adds element at index and moves the rest toward the end. |
-      | public E get(int index)               | Returns element at index. |                               |
-      |public E remove(int index)| Removes element at index and moves the rest toward the front.|
-   | public default void replaceAll(UnaryOperator<E> op) | Replaces each element in list with result of operator.|
+| Method| Description                                              |
+|:---------------------------------------|---------------------------------:|
+| public boolean add(E element)         | Adds element to end (available on all Collection APIs)   |
+| public void add(int index, E element) | Adds element at index and moves the rest toward the end. |
+| public E get(int index)               | Returns element at index. |                               |
+| public E remove(int index)| Removes element at index and moves the rest toward the front.|
+| public default void replaceAll(UnaryOperator<E> op) | Replaces each element in list with result of operator.|
 | public E set(int index, E e) | Replaces element at index and returns original. Throws IndexOutOfBoundsException if index is invalid.|
 | public default void sort(Comparator<? super E> c)| Sorts list. We cover this later in the chapter in the “Sorting Data” section |
 
@@ -81,11 +80,12 @@ Yes duplicates, yes order, int index to retrieve and add. No static like arrays
   For Queue and Deque, add, remove, access beginning and end constant time, search arbitrary index is linear time
 
 **Factory methods to create list**: Create a list with asList, of, CopyOf
-- | Method                  | Description                                     | Add | Replace | Delete | 
-       |-------------------------|-------------------------------------------------|-----|---------|--------|
-       | Arrays.asList(varargs)  | Fixed size list backed to array                 | NO  |  YES    | NO  |
-       | List.of (varargs)       | Immutable list                                  | NO  | NO    | NO   |
-       | List.CopyOf(collection) | Immutable list, copy original collection values | NO  | NO     | NO |
+
+| Method                  | Description                                     | Add | Replace | Delete | 
+|:-------------------------|:-------------------------------------------------:|:-----:|:---------:|--------:|
+| Arrays.asList(varargs)  | Fixed size list backed to array                 | NO  |  YES    | NO  |
+| List.of (varargs)       | Immutable list                                  | NO  | NO    | NO   |
+| List.CopyOf(collection) | Immutable list, copy original collection values | NO  | NO     | NO |
 
 **Converting List to Array**:
 `list.toArray()`
@@ -101,23 +101,20 @@ No duplicates, no specific order
   - **TreeSet** : Order, sorted
     - Adding, searching takes time
 
-![HashSet and TreeSet]( /images/ch9/hashset_hashtree.png)
+![HashSet and TreeSet](/images/chapter09/hashset_hast_tree.png)
 
 
 - **SET METHODS** :
 
-| MethodDescription             | Description                                                  |
-    |-------------------------------|--------------------------------------------------------------|
+| Method          | Description                                                  |
+|:-------------------------------|--------------------------------------------------------------:|
 | public boolean add(E element) | True unless element already in the set                       |
 | for.Each                      | Print arbitrary order for hashSet, natural order for TreeSet |  
- | equals()                     | Uses hashCode() or Comparable for sorted                     |
+| equals()                     | Uses hashCode() or Comparable for sorted                     |
 
 
 **Factory methods to create set**: Create set with of, CopyOf
-- | Method                 |                                   
-  |------------------------|
-  | Set.of (varargs)       | 
-  | Set.CopyOf(collection) |
+
 
 
 ## Generics
