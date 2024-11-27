@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.Iterator;
 public class Main {
 
@@ -208,8 +210,56 @@ public class Main {
     deque.removeFirst(); //NoSuchElementException
     deque.peekFirst(); // null
     deque.getFirst(); //NoSuchElementException
+
+    // --- MAP --------------------
+
+    //HASMAP
+    Map<String, String> hashMap = new HashMap<>();
+    hashMap.put("koala", "bamboo");
+    hashMap.put("lion", "meat");
+    hashMap.put("giraffe", "leaf");
+    String food = hashMap.get("koala"); // bamboo
+    for (String key: hashMap.keySet()) // koala, giraffe, lion,
+    System.out.print(key + ","); // koala,giraffe,lion,
        
-    
+    //TREEMAP
+    Map<String, String> treeMap = new TreeMap<>();
+    treeMap.put("koala", "bamboo");
+    treeMap.put("lion", "meat");
+    treeMap.put("giraffe", "leaf");
+    String food = treeMap.get("koala"); // bamboo
+    for (String key: treeMap.keySet()) // koala, giraffe, lion,
+    System.out.print(key + ","); // giraffe, koala, lion, SORTED
+
+
+    System.out.println(map.contains("lion")); // DOES NOT COMPILE, contains in from COllections, not in Map
+    System.out.println(map.containsKey("lion")); // true
+    System.out.println(map.containsValue("lion")); // false
+    System.out.println(map.size()); // 3
+    map.clear();
+    System.out.println(map.size()); // 0
+    System.out.println(map.isEmpty()); // true
+
+
+    // Iterate map
+    Map<Integer, Character> mapForEach = new HashMap<>();
+    mapForEach.put(1, 'a');
+    mapForEach.put(2, 'b');
+    mapForEach.put(3, 'c');
+    mapForEach.forEach((k, v)-> System.out.println(v)); //or k, or both, is up to me
+    mapForEach.values().forEach(System.out::println); // a b c
+
+
+    //Set iteration in maps
+    mapForEach.entrySet().forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));`
+
+    //getOrDefault to personalized exception
+    Map<Character, String> mapGetDefault = new HashMap<>();
+    mapGetDefault.put('x', "spot"); // key x, value spot
+    System.out.println(mapGetDefault.get('x')); //spot
+    System.out.println(mapGetDefault.getOrDefault('x', "")); // spot, valid so not perzonlized exception
+    System.out.println(mapGetDefault.get('y')); // null 
+    System.out.println(mapGetDefault.getOrDefault('y', "")); // "" Personalized exception
 
 
 
