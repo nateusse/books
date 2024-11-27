@@ -6,7 +6,7 @@
 Group of objects contained in a single object.
 Usually 2 constructors, default, 
 **Java Collections Framework**: 
-Set of classes in java.util for storing collections [Java Collections Framework](/images/chapter09/collection.png)
+Set of classes in java.util for storing collections ![Java Collections Framework](/images/chapter09/collection.png)
 
 
 ## Interfaces
