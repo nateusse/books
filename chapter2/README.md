@@ -22,14 +22,15 @@
 
 ## Tell, don't ask
 - What message objects communicate between each other? What they want in terms of the neighbors' role, but the called object should decide how to make that happen
-- **Demeter's law**: Tell, don't ask. Objects take decision based only in the information they hold internally or what it came with the triggering message, avoid navigation other objectos to make things happen
+- > **Demeter's law**: Tell, don't ask. Objects take decision based only in the information they hold internally or what it came with the triggering message, avoid navigation other objectos to make things happen
 - Easy swap objects with same role
 - Caller doesn't see nothing of their internal strcuture or the rest of the system behind role interface.
 - Not following tell, don't ask results in **"Train wreck"**, a series of getters chained together like a train:
-    - Example: `((EditSaveCustomizer) master.       getModelSable()
-        .getDockablePanel()
-            .getCustomized())
-                .getSaveItem().setenabled(Boolean.FALSE.booleanValue()); `
+
+    <code>((EditSaveCustomizer) master.getModelisable()<br>
+    .getDockablePanel() 
+        <br>.getCustomized())
+            <br>.getSaveItem().setenabled(Boolean.FALSE.booleanValue()); </code>
     - Instead, do: `master.allowSavingCustomisations();`
 
 - Lesson:Wrap implementation detail up behind a single call, reduce risk of a design change affecting little other parts
@@ -39,7 +40,7 @@
 - Ask values, collections, or factory to create objects.
 - Ocassionally ask objects about their states when searching or filtering ("avoiding train wreck")
 - ASk the question I really want answered, not the info to help us figure out the ansers ourselves:
-    - Example wrong:   `if (carriage.getSeat().getPercentReserved() < percentReserbedBarrier){...} `
+    - Example wrong:  ```if(carriage.getSeat().getPercentReserved() < percentReserbedBarrier){...}```
     - Good: ` if (carriage.hasSeatAvailableWithin(percentReservedBarrier)){...}`
 - Explanatory names, and queries that describe the intention of calling objects, makes testing easier
 
@@ -47,7 +48,7 @@
 - How to send messages without exposing states? Without states, waht can we assert during testing? How to check is doing it correctly?
 - Replace neighbors with mocks to check "expectations" (how we expect communication to works between target and mockes)
 - Mocks assert they have been called as expected, they also implmeents stubbed behaviors needed for the test to work
-- **Interface discovery**: Using interface in testing  to see the supporting roles our target object needs when we don't know how the neighboor looks like.
+- > **Interface discovery**: Using interface in testing  to see the supporting roles our target object needs when we don't know how the neighboor looks like.
 
 ## Support for TDD with Mock Objects
 1. Create mock instances of the neighbors
