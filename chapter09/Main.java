@@ -1,12 +1,16 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.Iterator;
 public class Main {
 
@@ -27,12 +31,12 @@ public class Main {
         Collection<String> birds = new ArrayList<>();
         birds.add("hawk"); // [hawk]
         birds.add("hawk"); // [hawk, hawk] duplicate
-        System.out.print(birds.remove("hawk")); // true
-        System.out.print(birds.isEmpty()); // false
-        System.out.print(birds.size()); // 1
+        System.out.println(birds.remove("hawk")); // true
+        System.out.println(birds.isEmpty()); // false
+        System.out.println(birds.size()); // 1
         System.out.println(birds.contains("hawk")); // true
         birds.clear(); // []
-        System.out.print(birds.size()); // 0
+        System.out.println(birds.size()); // 0
         System.out.println(birds.contains("robin")); // false
         birds.add("pigeon"); // [pigeon]
         birds.add(""); // [pigeon, ]
@@ -85,8 +89,8 @@ public class Main {
          // NullPointerException, calling any method on a null reference
         var heights = new ArrayList<Integer>();
         heights.add(null);
-        int h = heights.get(0);
-        System.out.println(h); //NullPointerException
+        //int h = heights.get(0);
+        //System.out.println(h); //NullPointerException
 
 
         //LIST ---------------------------------------------------
@@ -107,11 +111,11 @@ public class Main {
         System.out.println(copy); // [a, b, c]
         asListCopy.set(0, "x"); //changing the list, affects array
         System.out.println(Arrays.toString(array)); // [x, b, c]
-        copy.add("y"); // UnsupportedOperationException, it's imutable
-        copy.set(0,"x"); // UnsupportedOperationException, it's imutable
-        ofCopy.add("y"); // UnsupportedOperationException, it's imutable
-        of.add("y"); // UnsupportedOperationException, it's imutable
-        asListCopy.add("y"); // UnsupportedOperationException, it's fixed size
+        //copy.add("y"); // UnsupportedOperationException, it's imutable
+        //copy.set(0,"x"); // UnsupportedOperationException, it's imutable
+        //ofCopy.add("y"); // UnsupportedOperationException, it's imutable
+        //of.add("y"); // UnsupportedOperationException, it's imutable
+        //asListCopy.add("y"); // UnsupportedOperationException, it's fixed size
 
     
     
@@ -125,16 +129,16 @@ public class Main {
         listBasics.add("SD");// [SD]
         listBasics.add(0, "NY");// [NY,SD]
         listBasics.set(1, "FL");// [NY,FL]
-        System.out.println(list.get(0)); // NY
+        System.out.println(listBasics.get(0)); // NY
 
         //remove is a Overloaded method
         listBasics.remove("NY");// [FL] remove by element from Collection
         listBasics.remove(0);// [] remove by index List
 
-        listBasics.set(0, "?");// IndexOutOfBoundsException, no elements to replace
+        //listBasics.set(0, "?");// IndexOutOfBoundsException, no elements to replace
         //repalce All
         var numbersReplaceAll = Arrays.asList(1, 2, 3);
-        numbersReplaceAll.replaceAll(x -­> x*2); //multiply values by 2
+        numbersReplaceAll.replaceAll(x -> x*2); //multiply values by 2
         System.out.println(numbersReplaceAll);// [2, 4, 6]
         //lambda with ternary replaceAlla
         numbersReplaceAll.replaceAll(x -> x >= 2 ? x * 2 : x); //multiply values by 2 if greater than 2
@@ -149,7 +153,7 @@ public class Main {
         listRemoveOverloaded.remove(2); //index or value? primitive so index [3,2]
         listRemoveOverloaded.remove(Integer.valueOf(2)); //[3]
         System.out.println(listRemoveOverloaded); // [3]
-        listRemoveOverloaded.remove(100); //IndexOutOfBoundsException, no elements to remove
+        //listRemoveOverloaded.remove(100); //IndexOutOfBoundsException, no elements to remove
 
 
         //COnvert list to array
@@ -159,7 +163,7 @@ public class Main {
         Object[] objectArray = listToArray.toArray(); // [hawk, robin], defaul array class Object
         String[] stringArray = listToArray.toArray(new String[0]); // [hawk, robin], array of strings [0] java creates right size
         // listToArray.clear();
-        list.set(1, "new"); // [hawk, new]
+        listToArray.set(1, "new"); // [hawk, new]
         System.out.print(Arrays.toString(stringArray)); //[hawk, robin]
         System.out.println(objectArray.length); // 2 Eliminate list, array still has elements
         System.out.println(stringArray.length); // 2 Eliminate list, array still has elements
@@ -168,26 +172,26 @@ public class Main {
 
         //SET ------------------------------------------------------
         //Factory to create sets
-        Set<String> setOf= Set.of('z','o','o'); // [z, o]  Inmutable
-        Set<String> setCopyOf = Set.copyOf(setFactory); // [z, o]  Inmutable
-        setOf.add("x"); // UnsupportedOperationException, it's imutable
-        setCopyOf.add("x"); // UnsupportedOperationException, it's imutable
-        setOf.remove("z"); // UnsupportedOperationException, it's imutable
+        Set<Character> setOf= Set.of('z','o'); // [z, o]  Inmutable, no duplicates, if zoo, seria solo zo
+        Set<Character> setCopyOf = Set.copyOf(setOf); // [z, o]  Inmutable
+        //setOf.add("x"); // UnsupportedOperationException, it's imutable
+        //setCopyOf.add('x'); // UnsupportedOperationException, it's imutable
+        //setOf.remove('z'); // UnsupportedOperationException, it's imutable
         
         //methods with HashSet
         Set<Integer> setHash = new HashSet<>();
-        boolean b1 = setHash.add(66);// true
-        boolean b2 = setHash.add(10);// true
-        boolean b3 = setHash.add(66); // false
-        boolean b4 = setHash.add(8); // true
+        boolean b1H = setHash.add(66);// true
+        boolean b2H = setHash.add(10);// true
+        boolean b3H = setHash.add(66); // false
+        boolean b4H = setHash.add(8); // true
         setHash.forEach(System.out::println); // 66 8 10 in three lines, arbitrary order
 
         //methods with three set
         Set<Integer> treeSet = new TreeSet<>();
-        boolean b1 = treeSet.add(66);// true
-        boolean b2 = treeSet.add(10);// true
-        boolean b3 = treeSet.add(66); // false
-        boolean b4 = treeSet.add(8); // true
+        boolean b1T = treeSet.add(66);// true
+        boolean b2T = treeSet.add(10);// true
+        boolean b3T = treeSet.add(66); // false
+        boolean b4T = treeSet.add(8); // true
         treeSet.forEach(System.out::println); // 8 10 66 in three lines,sorted
 
 
@@ -201,15 +205,16 @@ public class Main {
     System.out.println(queue.remove());// 10, remove front
     System.out.println(queue.peek());// 4
 
+    Deque<Integer> deque = new LinkedList<>();
     deque.offerFirst(10); // true [10]
     deque.offerLast(4); // true [10, 4]
     deque.peekFirst(); // 10 [10, 4]
     deque.pollFirst(); // 10 [4]
     deque.pollLast(); // 4 []
     deque.pollFirst(); //null
-    deque.removeFirst(); //NoSuchElementException
+   // deque.removeFirst(); //NoSuchElementException
     deque.peekFirst(); // null
-    deque.getFirst(); //NoSuchElementException
+   // deque.getFirst(); //NoSuchElementException
 
     // --- MAP --------------------
 
@@ -218,27 +223,27 @@ public class Main {
     hashMap.put("koala", "bamboo");
     hashMap.put("lion", "meat");
     hashMap.put("giraffe", "leaf");
-    String food = hashMap.get("koala"); // bamboo
+    String foodHashMap = hashMap.get("koala"); // bamboo
     for (String key: hashMap.keySet()) // koala, giraffe, lion,
-    System.out.print(key + ","); // koala,giraffe,lion,
+    System.out.println(key + ","); // koala,giraffe,lion,
        
     //TREEMAP
     Map<String, String> treeMap = new TreeMap<>();
     treeMap.put("koala", "bamboo");
     treeMap.put("lion", "meat");
     treeMap.put("giraffe", "leaf");
-    String food = treeMap.get("koala"); // bamboo
+    String foodTreeMap = treeMap.get("koala"); // bamboo
     for (String key: treeMap.keySet()) // koala, giraffe, lion,
-    System.out.print(key + ","); // giraffe, koala, lion, SORTED
+    System.out.println(key + ","); // giraffe, koala, lion, SORTED
 
-
-    System.out.println(map.contains("lion")); // DOES NOT COMPILE, contains in from COllections, not in Map
-    System.out.println(map.containsKey("lion")); // true
-    System.out.println(map.containsValue("lion")); // false
-    System.out.println(map.size()); // 3
-    map.clear();
-    System.out.println(map.size()); // 0
-    System.out.println(map.isEmpty()); // true
+    //MAP METHODS
+    //System.out.println(hashMap.contains("lion")); // DOES NOT COMPILE, contains in from COllections, not in Map
+    System.out.println(hashMap.containsKey("lion")); // true
+    System.out.println(hashMap.containsValue("lion")); // false
+    System.out.println(hashMap.size()); // 3
+    hashMap.clear();
+    System.out.println(hashMap.size()); // 0
+    System.out.println(hashMap.isEmpty()); // true
 
 
     // Iterate map
@@ -251,7 +256,7 @@ public class Main {
 
 
     //Set iteration in maps
-    mapForEach.entrySet().forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));`
+    mapForEach.entrySet().forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
 
     //getOrDefault to personalized exception
     Map<Character, String> mapGetDefault = new HashMap<>();
