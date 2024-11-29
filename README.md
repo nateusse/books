@@ -7,7 +7,7 @@
 - Chapter 05 - Methods
 - Chapter 06 - Class Design
 - Chapter 07 - Beyond Classes
-- Chapter 08 - Lambdas and Functional Interfaces
+- [Chapter 08 - Lambdas and Functional Interfaces](chapter08/README.md)
 - [Chapter 09 - Collections and Generics](chapter09/README.md)
 - Chapter 10 - Streams
 - Chapter 11 - Exceptions and Localization
