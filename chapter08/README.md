@@ -1,4 +1,4 @@
-# Lambdas and Functional Interfaces
+# Chapter  8: Lambdas and Functional Interfaces
 
 
 > __Functional programming__: Write code more declarative, what I want to do, isntead of dealing with the states ob an objects
