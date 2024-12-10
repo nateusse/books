@@ -232,20 +232,31 @@ Inherits Queue methods
 | public int size()| Returns number of entries (key/valuepairs) in map.|
 | public Collection<V> values()| Returns Collection of all values.|
 
+Table to explaing merge() behavior
+
+| If the requested key ___| And mapping function returns ________| Then|
+|:-----|:----:|----:|
+|Has a null value in map|N/A (mapping function not called|Update key’s value in map with value parameter|
+| Has a non-­null value in map| null| Remove key from map|
+|Has a non-­null value in map| A non-null value| Set key to mapping function result|
+| Is not in map | N/A(mapping function not called)|Add key with value parameter to map directly without calling mapping function|
 
 ### Iterating Maps
 For each, 
 
 1. **for each**: 
+
 Lambda with 2 parameters.
   - Example: `map.forEach(k,v) -> System.out.println(k,v)`
 
-2. **entrySet **: 
+Method reference
+  -  `map.values().forEach(System.out::println);`
+
+2. __entrySet__: 
 - Entry is a static interface inside map to get key and value
   - Example: `map.entrySet().forEach(e -­> System.out.println(e.getKey() + " " + e.getValue()));`
 
 
-3. **Iterator**
 
 
 ## Generics
@@ -260,3 +271,271 @@ Lambda with 2 parameters.
 
 ### Null pointer exception
 Calling any method on null value, gives a NullPointerException
+
+
+## Comparing collection types
+
+Review of all collection classes
+
+| Type | Can contain duplicate elements?|Elements always ordered? | Has keys and values?| Must add/remove in specific order?|
+|:---|-----|:----:|----|----:|
+|List|Yes|Yes (by index)|No|No|
+|Map|Yes (for values)|No|Yes|No|
+|Queue|Yes|Yes (retrieved indefined order)|No|Yes|
+|Set|No|No|No|No|
+
+Collection attributes
+
+
+| Type | Java Collections Framework interface| Sorted?| Calls hashCode?| Calls compareTo?
+|:---|-----|:----:|----|----:|
+| ArrayDeque | Deque | No | No | No |
+|ArrayList|List|No|No|No|
+|HashMap|Map|No|Yes|No|
+|HashSet|Set|No|Yes|No|
+|LinkedList|List, Deque|No|No|No|
+|TreeMap|Map|Yes|No|Yes|
+|TreeSet|Set|Yes|No|Yes|
+
+> Data structures that involve sorting, do not allow null values
+
+Older Collections, with threads, not used anymore because there are better concurrent alternatives:
+
+- Vector: List
+- Hashtable: Implements Map
+- Stack: Implements Queue
+
+### Sorting Data
+
+- Number: numerical order
+- String: According to Unicode character mapping
+
+> Numbers sort before letters, uppercase letters sort before lowercase 
+
+## Sorting methods
+1. Comparable
+2. Comparator
+3. Collections.sort()
+
+## 1. Comparable 
+Data structures that require comparison
+
+`public interface Comparable<T> { int compareTo( T o) }`
+
+- T for type,  to avoid casting
+- Any object can be Comparable
+
+_Example_:
+
+Create class Duck, implement Comparable<>
+
+```
+import java.util.*;
+
+public class Duck implements Comparable<Duck> {
+  private String name;
+
+  public Duck(String name) { this.name = name;}
+
+```
+Override toString()  from Object to have a redable return
+
+`public String toString() { return name; }`
+
+Implement comparaTo() sorts ascendingly by name. String already has a compareTo, so it delagates.
+  - 0 if current object equivalent to argument in comparateTo()
+  - Negatative number (less than 0):Current object smaller
+  - Positive number (greater than 0): Object is larger than argument compareTo()
+ 
+```
+public int compareTo(Duck d) {
+  return name.compareTo(d.name); 
+}
+```
+
+Call in main
+
+```
+public static void main(String[] args) {
+  var ducks = new ArrayList<Duck>();
+  ducks.add(new Duck("Quack"));
+  ducks.add(new Duck("Puddles"));
+  Collections.sort(ducks); // sort by name
+  System.out.println(ducks); // [Puddles, Quack]
+```
+
+
+CompareTo() with number instead of String
+```
+Public class Animal implements Comparable<Animal> {
+  private int id;
+
+  public int compareTo(Animal a) {
+    return id - ­a.id; // sorts ascending by id
+  }
+
+```
+Main, same class
+```
+  public static void main(String[] args) {
+    var a1 = new Animal();
+    var a2 = new Animal();
+    a1.id = 5;
+    a2.id = 7;
+    System.out.println(a1.compareTo(a2)); // -­2
+    System.out.println(a1.compareTo(a1)); // 0
+    System.out.println(a2.compareTo(a1)); // 2
+  }
+}
+```
+
+### Legacy code /non-generics compareTo()
+Cast since it is passed an Object, before accessing instance variables on it
+
+Example:
+
+```
+public class LegacyDuck implements Comparable {
+  private String name;
+
+  public int compareTo(Object obj) {
+
+    // cast,no generics
+    LegacyDuck d = (LegacyDuck) obj; 
+
+    return name.compareTo(d.name);
+
+  }
+}
+```
+
+### Checking for null
+
+```
+public class MissingDuck implements Comparable<MissingDuck> {
+  private String name;
+
+  public int compareTo(MissingDuck quack) {
+    if (quack == null)
+      throw new IllegalArgumentException("Poorly formed duck!");
+
+    if (this.name == null && quack.name == null)
+        return 0;
+
+    else if (this.name == null) return -­ 1;
+    else if (quack.name == null) return 1;
+    else return name.compareTo(quack.name);
+  }
+}
+```
+
+Throw an exception if it is passsed a null MissingDuck object.
+
+if name of a duck is null, It's sorted first
+
+### Keeping compareTo() and equals() consistent
+When implementing Comparable, new logic is needed for equality
+- compareTo() returns 0 if two objects are equal
+- equals() returns true if two objects are equal
+- x.equals(y) is true whenever x.compareTo(y) is 0
+- x.equals(y) is false whenever x.compareTo(y) is not 0
+
+Not all  collection classes are consistant with compareTo(), and  equals(). Example: 
+
+```
+public class Product implements Comparable<Product> {
+  private int id;
+  private String name;
+
+  public int hashCode() { return id; }
+
+  public boolean equals(Object obj) {
+    if(!(obj instanceof Product)) return false;
+    
+    var other = (Product) obj;
+    
+    return this.id == other.id;
+  }
+
+  public int compareTo(Product obj) {
+    return this.name.compareTo(obj.name);
+  }
+}
+
+```
+__Problem__: Sorting Product objects by name, but names are not unique. The compareTo() method does not have to be consistent with equals. Use Comparator to sort elsewhere
+
+
+
+## 2. Comparator
+Sort objact that doesn't use Comparable
+
+```
+1: import java.util.ArrayList;
+2: import java.util.Collections;
+3: import java.util.Comparator;
+4:
+5: public class Duck implements Comparable<Duck> {
+6:      private String name;
+7:      private int weight;
+8:
+9:  // Assume getters/setters/constructors provided
+10:
+11:   public String toString() { return name; }
+12:
+13:      public int compareTo(Duck d) {
+14:          return name.compareTo(d.name);
+15:      }
+16:
+17:  public static void main(String[] args) {
+18:      Comparator<Duck> byWeight = new Comparator<Duck>() {
+19:          public int compare(Duck d1, Duck d2) {
+20:               return d1.getWeight()-­ d2.getWeight();
+21:          }
+22:       };
+23:      var ducks = new ArrayList<Duck>();
+24:      ducks.add(new Duck("Quack", 7));
+25:      ducks.add(new Duck("Puddles", 10));
+26:      Collections.sort(ducks);
+27:      System.out.println(ducks);  // [Puddles, Quack]
+28:      Collections.sort(ducks, byWeight);
+29:      System.out.println(ducks);// [Quack, Puddles]
+30:    }
+31: }
+```
+
+## 3. Collection.sort()
+- Collections.sort() method uses the compareTo() method to sort.
+- Expects objects to be Comparable
+
+
+### Sorting a List
+- 1. Collections.sort(list)
+- 2. Sort directly the list
+
+Example: 
+
+```
+2: public class SortRabbits {
+3:   static record Rabbit(int id) {}
+4:   public static void main(String[] args) {
+5:      List<Rabbit> rabbits = new ArrayList<>();
+6:      rabbits.add(new Rabbit(3));
+7:      rabbits.add(new Rabbit(1));
+8:      Collections.sort(rabbits); // NO 
+9: } }
+```
+__Why__: Java knows that the Rabbit record is not Comparable. It knows sorting will fail, so it
+doesn’t even let the code compile
+
+__Solution__: Comparator to sort(), specify sort order without using a
+compareTo() method
+
+```
+Comparator<Rabbit> c = (r1, r2) -­> r1.id -­r2.id;
+Collections.sort(rabbits, c);
+System.out.println(rabbits); 
+// [Rabbit[id=1], Rabbit[id=3]]
+```
+
+#### 2.

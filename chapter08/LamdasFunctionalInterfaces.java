@@ -19,7 +19,7 @@ class CheckIfHopper implements CheckTrait{
     }
 }
 
-public class Lamdas {
+public class LamdasFunctionalInterfaces {
 
 
     // Helper method print animals

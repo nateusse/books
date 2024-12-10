@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.BiFunction;
 import java.util.Iterator;
 public class CollectionsGenerics {
 
@@ -245,6 +246,65 @@ public class CollectionsGenerics {
     System.out.println(hashMap.size()); // 0
     System.out.println(hashMap.isEmpty()); // true
 
+    //Map contains, contains key, contains value, size, is empty
+    //System.out.println(hashMap.contains("lion")); // DOES NOT COMPILE is from COLLECTIONS
+    System.out.println(hashMap.containsKey("lion")); // true
+    System.out.println(hashMap.containsValue("lion")); // false
+    System.out.println(hashMap.size()); // 3
+    hashMap.clear(); //clear map
+    System.out.println(hashMap.size()); // 0
+    System.out.println(hashMap.isEmpty()); // true
+
+    //get personalized messages
+      //getOrDefault to personalized exception
+    Map<Character, String> mapGetDefault = new HashMap<>();
+    mapGetDefault.put('x', "spot"); // key x, value spot
+    System.out.println(mapGetDefault.get('x')); //spot
+    System.out.println(mapGetDefault.getOrDefault('x', "")); // spot, valid so not perzonlized exception
+    System.out.println(mapGetDefault.get('y')); // null 
+    System.out.println(mapGetDefault.getOrDefault('y', "")); // "" Personalized exception
+  
+    //replacing values
+    Map<Integer, Integer> mapReplace = new HashMap<>();
+    mapReplace.put(1, 2);
+    mapReplace.put(2, 4);
+    Integer original = mapReplace.replace(2, 10); // 4
+    System.out.println(mapReplace);// {1=2, 2=10}
+    mapReplace.replaceAll((k, v) -> k + v);
+    System.out.println(mapReplace);// {1=3, 2=12}
+
+    //putting if absent
+    Map<String, String> favorites = new HashMap<>();
+    favorites.put("Jenny", "Bus Tour");
+    favorites.put("Tom", null);
+    favorites.putIfAbsent("Jenny", "Tram");
+    favorites.putIfAbsent("Sam", "Tram");
+    favorites.putIfAbsent("Tom", "Tram");
+    System.out.println(favorites); // {Tom=Tram, Jenny=Bus Tour, Sam=Tram}
+
+
+ //merging values
+   BiFunction<String, String, String> mapper = (v1, v2) -> v1.length()> v2.length() ? v1: v2;
+   Map<String, String> favoritesMerge = new HashMap<>();
+   favoritesMerge.put("Jenny", "Bus Tour");
+   favoritesMerge.put("Tom", "Tram");
+   String jenny = favoritesMerge.merge("Jenny", "Skyride", mapper);
+   String tom = favoritesMerge.merge("Tom", "Skyride", mapper);
+   System.out.println(favoritesMerge); // {Tom=Skyride, Jenny=Bus Tour}
+   System.out.println(jenny); // Bus Tour
+   System.out.println(tom);// Skyride
+     //If mapping function were called, it would be NullPointerException
+    //maping used only between two real values to decided from
+
+    //mapping call with null
+    BiFunction<String, String, String> mapperNull = (v1, v2) -> null;
+    Map<String, String> favoritesNull = new HashMap<>();
+    favoritesNull.put("Jenny", "Bus Tour");
+    favoritesNull.put("Tom", "Bus Tour");
+    favoritesNull.merge("Jenny", "Skyride", mapperNull );
+    favoritesNull.merge("Sam", "Skyride", mapperNull );
+    System.out.println(favoritesNull);
+// {Tom=Bus Tour, Sam=Skyride}
 
     // Iterate map
     Map<Integer, Character> mapForEach = new HashMap<>();
@@ -253,18 +313,13 @@ public class CollectionsGenerics {
     mapForEach.put(3, 'c');
     mapForEach.forEach((k, v)-> System.out.println(v)); //or k, or both, is up to me
     mapForEach.values().forEach(System.out::println); // a b c
+  
 
 
     //Set iteration in maps
     mapForEach.entrySet().forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
 
-    //getOrDefault to personalized exception
-    Map<Character, String> mapGetDefault = new HashMap<>();
-    mapGetDefault.put('x', "spot"); // key x, value spot
-    System.out.println(mapGetDefault.get('x')); //spot
-    System.out.println(mapGetDefault.getOrDefault('x', "")); // spot, valid so not perzonlized exception
-    System.out.println(mapGetDefault.get('y')); // null 
-    System.out.println(mapGetDefault.getOrDefault('y', "")); // "" Personalized exception
+  
 
 
 
