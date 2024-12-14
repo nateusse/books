@@ -22,10 +22,12 @@ Real company where:
     - Money is not buying functionality
 
 # Conclusion
+Overconfident is a problem:
 
-- Overconfident to do clean architecture later is bad. Rush to market force to stay ahead, no time to fix mistakes
-- Good code, clean, well-design matters
-- Messy code __DON'T__ increase productivity first and slows developers later, is always bad. Bugs never sleep or relents
-    - Jason Gorman experiment. Slowest TDD day was faster than faster non-TDD day. TDD was 10% faster.
 
-- Start over from scratch the system and redesign is not good, overconfidence to believe this time will be different,  turns everything in a mess again
+- Overconfident to do clean architecture later is bad. Rush to market force to stay ahead, no time to fix mistakes. Good code, clean, well-design matters since the beggining
+  
+- Overconfident that messy code increases productivity first and slows developers later is bad. Bugs never sleep or relents
+    - Jason Gorman experiment with his code. Slowest TDD day was faster than faster non-TDD day. TDD was 10% faster
+
+-Overconfident that start over from scratch and redesign the system is bad. Overconfidence overlook messy practices that will be repeated
